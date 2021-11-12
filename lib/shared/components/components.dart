@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-
 ///navigate from screen to another with replacement
 void navigateAndFinish(context, widget) {
   Navigator.pushAndRemoveUntil(
@@ -37,7 +36,7 @@ Widget defaultButton({
         color: background,
       ),
       child: MaterialButton(
-        onPressed: (pressed),
+        onPressed: pressed,
         child: Text(
           isUpperCase ? text.toUpperCase() : text,
           style: const TextStyle(
@@ -80,6 +79,7 @@ Widget defaultTextFormField({
       ),
     );
 
+///Text Button
 Widget defaultTextButton({
   required Function() onPressed,
   required String text,
@@ -132,8 +132,7 @@ Color chooseToastColor(ToastStates states) {
 }
 
 ///Divider
-Widget myDivider() =>
-    Padding(
+Widget myDivider() => Padding(
       padding: const EdgeInsetsDirectional.only(
         start: 16.0,
       ),
@@ -143,6 +142,3 @@ Widget myDivider() =>
         color: Colors.grey[300],
       ),
     );
-
-
-

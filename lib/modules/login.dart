@@ -1,5 +1,6 @@
 import 'package:facebook/cubits/login/cubit.dart';
 import 'package:facebook/cubits/login/states.dart';
+import 'package:facebook/modules/register.dart';
 import 'package:facebook/shared/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -125,7 +126,7 @@ class LoginScreen extends StatelessWidget {
                             ),
                             defaultTextButton(
                               onPressed: () {
-                                // navigateTo(context, RegisterScreen());
+                                navigateTo(context, RegisterScreen());
                               },
                               text: 'register',
                             ),
