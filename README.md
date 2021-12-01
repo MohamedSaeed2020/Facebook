@@ -1,16 +1,21 @@
-# facebook
+# Facebook
 
-A new Flutter project.
+Facebook is a clone for facebook app, It enable you to create a unique and beautiful posts. You also can chat with your friends and more. 
 
-## Getting Started
+# Features
+With Facebook you can:
 
-This project is a starting point for a Flutter application.
+* You can register and login.
+* You can create a post with and without image.
+* You can edit your account (Profile and cover image, name, phone and bio).
+* You can chat with your friends with messenger app in your facebook app with full features.
+* This app is under developement, i will add more features to it. 
 
-A few resources to get you started if this is your first Flutter project:
+# Technologies used
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* State management using Bloc
+* Firebase Authentication
+* Firebase Firestore
+* Firebase Storage
+* Reusable Components
+* Bottom Navigation Bar
