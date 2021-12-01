@@ -1,6 +1,6 @@
 # Facebook
 
-Facebook is a clone for facebook app, It enable you to create a unique and beautiful posts. You also can chat with your friends and more. 
+Facebook is a clone of the facebook app, It enable you to create a unique and beautiful posts. You also can chat with your friends and more. 
 
 # Features
 With Facebook you can:
