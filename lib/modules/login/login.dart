@@ -1,6 +1,8 @@
 import 'package:facebook/cubits/login/cubit.dart';
 import 'package:facebook/cubits/login/states.dart';
-import 'package:facebook/modules/register.dart';
+import 'package:facebook/layouts/home_layout.dart';
+import 'package:facebook/modules/register/register.dart';
+import 'package:facebook/network/local/cache_helper.dart';
 import 'package:facebook/shared/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,13 +24,18 @@ class LoginScreen extends StatelessWidget {
           if (state is FaceLoginErrorState) {
             showToast(state.error, ToastStates.error);
           }
+          if (state is FaceLoginSuccessState) {
+            CacheHelper.saveData(key: 'userId', value: state.userId)
+                .then((value) {
+              navigateAndFinish(context, const HomeLayout());
+            });
+          }
         },
         builder: (context, state) {
           var cubit = FaceLoginCubit.get(context);
           return Scaffold(
-            backgroundColor: Colors.white,
             appBar: AppBar(
-              title: const Text('Login...'),
+              title: const Text('Login'),
             ),
             body: Center(
               child: SingleChildScrollView(
@@ -67,7 +74,7 @@ class LoginScreen extends StatelessWidget {
                         defaultTextFormField(
                           validate: (value) {
                             if (value!.isEmpty) {
-                              return 'Password is too short';
+                              return 'Password Must Not Be Empty';
                             }
                           },
                           controller: passwordController,
@@ -77,14 +84,6 @@ class LoginScreen extends StatelessWidget {
                           suffix: cubit.suffix,
                           suffixPressed: () {
                             cubit.changePasswordVisibility();
-                          },
-                          onSubmit: (_) {
-                            /*   if(formKey.currentState!.validate()){
-                              cubit.userLogin(
-                                email: emailController.text,
-                                password: passwordController.text,
-                              );
-                            }*/
                           },
                           isPassword: cubit.isPassword,
                         ),
@@ -129,6 +128,7 @@ class LoginScreen extends StatelessWidget {
                                 navigateTo(context, RegisterScreen());
                               },
                               text: 'register',
+                              isUpperCase:true,
                             ),
                           ],
                         ),

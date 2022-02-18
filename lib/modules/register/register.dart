@@ -1,5 +1,6 @@
 import 'package:facebook/cubits/register/cubit.dart';
 import 'package:facebook/cubits/register/states.dart';
+import 'package:facebook/layouts/home_layout.dart';
 import 'package:facebook/shared/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,7 +22,9 @@ class RegisterScreen extends StatelessWidget {
       create: (context) => FaceRegisterCubit(),
       child: BlocConsumer<FaceRegisterCubit, FaceRegisterStates>(
         listener: (context, state) {
-          if (state is FaceRegisterSuccessState) {}
+          if (state is FaceRegisterCreateUserSuccessState) {
+            navigateAndFinish(context, const HomeLayout());
+          }
         },
         builder: (context, state) {
           var cubit = FaceRegisterCubit.get(context);

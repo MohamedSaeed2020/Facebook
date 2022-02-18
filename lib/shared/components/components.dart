@@ -1,3 +1,4 @@
+import 'package:facebook/shared/styles/icon_broken.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -27,8 +28,7 @@ Widget defaultButton({
   bool isUpperCase = true,
   required Function() pressed,
   required String text,
-}) =>
-    Container(
+}) => Container(
       width: width,
       height: 40.0,
       decoration: BoxDecoration(
@@ -58,8 +58,7 @@ Widget defaultTextFormField({
   IconData? suffix,
   bool isPassword = false,
   Function()? suffixPressed,
-}) =>
-    TextFormField(
+}) => TextFormField(
       validator: validate,
       controller: controller,
       keyboardType: type,
@@ -84,13 +83,13 @@ Widget defaultTextButton({
   required Function() onPressed,
   required String text,
   double? fontSize,
+  bool isUpperCase=false,
   FontWeight? fontWeight,
   Color? color,
-}) {
-  return TextButton(
+}) => TextButton(
     onPressed: onPressed,
     child: Text(
-      text.toUpperCase(),
+      isUpperCase ? text.toUpperCase() : text,
       style: TextStyle(
         fontSize: fontSize,
         fontWeight: fontWeight,
@@ -98,9 +97,9 @@ Widget defaultTextButton({
       ),
     ),
   );
-}
 
-///show toast
+
+///Show Toast
 void showToast(String message, ToastStates states) {
   Fluttertoast.showToast(
     msg: message,
@@ -113,12 +112,12 @@ void showToast(String message, ToastStates states) {
   );
 }
 
-enum ToastStates { login, warning, error }
+enum ToastStates { success, warning, error }
 
 Color chooseToastColor(ToastStates states) {
   Color color;
   switch (states) {
-    case ToastStates.login:
+    case ToastStates.success:
       color = Colors.green;
       break;
     case ToastStates.warning:
@@ -141,4 +140,27 @@ Widget myDivider() => Padding(
         height: 1.0,
         color: Colors.grey[300],
       ),
+    );
+
+///Default AppBar
+PreferredSizeWidget defaultAppBar({
+  required BuildContext context,
+  String? title,
+  List<Widget>? actions,
+}) => AppBar(
+      leading: IconButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: const Icon(
+          IconBroken.Arrow___Left_2,
+        ),
+      ),
+      titleSpacing: 5.0,
+      title: title != null
+          ? Text(
+              title,
+            )
+          : null,
+      actions: actions,
     );
