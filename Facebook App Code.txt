@@ -1,0 +1,363 @@
+-------------------------------Firebase Cloud Messaging---------------------------------------
+//get token of this device for this app
+  var token = await FirebaseMessaging.instance.getToken();
+  print('Token: $token');
+  //enable firebase messaging (FCM)
+  ///when app is open and you are using it(Foreground)
+  FirebaseMessaging.onMessage.listen((event) {
+    //Event is the remote message
+    print(event.data.toString());
+    if (event.notification != null) {
+      print(event.notification!.title);
+    }
+  });
+
+  ///when app is opened and you aren't using it and notification comes and yoy open it (Background)
+  FirebaseMessaging.onMessageOpenedApp.listen((event) {
+    //Event is the remote message
+    print(event.data.toString());
+    if (event.notification != null) {
+      print(event.notification!.title);
+    }
+  });
+
+  ///when app is closed (Background)
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+//get token of this device for this app
+  var token = await FirebaseMessaging.instance.getToken();
+  print('Token: $token');
+  //enable firebase messaging (FCM)
+  ///when app is open and you are using it(Foreground)
+  FirebaseMessaging.onMessage.listen((event) {
+    //Event is the remote message
+    print(event.data.toString());
+    if (event.notification != null) {
+      print(event.notification!.title);
+    }
+  });
+
+  ///when app is opened and you aren't using it and notification comes and yoy open it (Background)
+  FirebaseMessaging.onMessageOpenedApp.listen((event) {
+    //Event is the remote message
+    print(event.data.toString());
+    if (event.notification != null) {
+      print(event.notification!.title);
+    }
+  });
+
+  ///when app is closed (Background)
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+****************************************************************************************************
+ ///Profile Statistics
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 20.0,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: InkWell(
+                        child: Column(
+                          children: [
+                            Text(
+                              '100',
+                              style: Theme.of(context).textTheme.subtitle2,
+                            ),
+                            Text(
+                              'Posts',
+                              style: Theme.of(context).textTheme.caption,
+                            ),
+                          ],
+                        ),
+                        onTap: () {},
+                      ),
+                    ),
+                    Expanded(
+                      child: InkWell(
+                        child: Column(
+                          children: [
+                            Text(
+                              '500',
+                              style: Theme.of(context).textTheme.subtitle2,
+                            ),
+                            Text(
+                              'Photos',
+                              style: Theme.of(context).textTheme.caption,
+                            ),
+                          ],
+                        ),
+                        onTap: () {},
+                      ),
+                    ),
+                    Expanded(
+                      child: InkWell(
+                        child: Column(
+                          children: [
+                            Text(
+                              '10M',
+                              style: Theme.of(context).textTheme.subtitle2,
+                            ),
+                            Text(
+                              'Followers',
+                              style: Theme.of(context).textTheme.caption,
+                            ),
+                          ],
+                        ),
+                        onTap: () {},
+                      ),
+                    ),
+                    Expanded(
+                      child: InkWell(
+                        child: Column(
+                          children: [
+                            Text(
+                              '50',
+                              style: Theme.of(context).textTheme.subtitle2,
+                            ),
+                            Text(
+                              'Followings',
+                              style: Theme.of(context).textTheme.caption,
+                            ),
+                          ],
+                        ),
+                        onTap: () {},
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+****************************************************************************************************
+
+//Email Verfication
+import 'package:facebook/cubits/home/facebook_cubit.dart';
+import 'package:facebook/cubits/home/facebook_state.dart';
+import 'package:facebook/shared/components/components.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
+
+class HomeLayout extends StatelessWidget {
+  const HomeLayout({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<FacebookCubit, FacebookStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        FacebookCubit cubit = FacebookCubit.get(context);
+        return Scaffold(
+          appBar: AppBar(
+              title: const Text(
+            'News Feed',
+          )),
+          body: Conditional.single(
+            context: context,
+            conditionBuilder: (context) => cubit.user != null,
+            widgetBuilder: (context) {
+              //var user = cubit.user;
+              return Column(
+                children: [
+                  if (!((cubit.user)!.isEmailVerified))
+                  //OR: if(UserCredential.user.emailVerified)
+                    //OR: if(FirebaseAuth.instance.currentUser!.emailVerified)
+                    Container(
+                      color: Colors.amber.withOpacity(.6),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0,
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.info_outlined,
+                            ),
+                            const SizedBox(
+                              width: 15.0,
+                            ),
+                            const Expanded(
+                              child: Text(
+                                'Please Verify Your Email',
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 15.0,
+                            ),
+                            defaultTextButton(
+                                onPressed: () {
+                                  FirebaseAuth.instance.currentUser
+                                      ?.sendEmailVerification()
+                                      .then((value) {
+                                    showToast('Please Check Your Email',
+                                        ToastStates.success);
+                                  }).catchError((error) {});
+                                },
+                                text: 'send')
+                          ],
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            },
+            fallbackBuilder: (context) => const Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+*******************************************************************************
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextButton(
+                            onPressed: () {
+                              cubit.getPostImage();
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Icon(
+                                  IconBroken.Image,
+                                ),
+                                SizedBox(
+                                  width: 5.0,
+                                ),
+                                Text(
+                                  'Add Photo?',
+                                ),
+                              ],
+                            ),
+
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 5.0,
+                        ),
+                         Expanded(
+                          child: TextButton(
+                            onPressed: () { },
+                            child:  Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Icon(
+                                  Icons.tag,
+                                ),
+                                SizedBox(
+                                  width: 5.0,
+                                ),
+                                Text(
+                                  'Add Tags?',
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+
+*******************************************************************************
+
+   ///Post Tag
+            /*Padding(
+              padding: const EdgeInsets.only(
+                bottom: 10.0,
+                top: 5.0,
+              ),
+              child: Container(
+                width: double.infinity,
+                child: Wrap(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(end: 6.0),
+                      child: Container(
+                        height: 25.0,
+                        child: MaterialButton(
+                          onPressed: () {},
+                          minWidth: 1.0,
+                          padding: EdgeInsets.zero,
+                          child: Text(
+                            '#software',
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .caption!
+                                .copyWith(
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(end: 6.0),
+                      child: Container(
+                        height: 25.0,
+                        child: MaterialButton(
+                          onPressed: () {},
+                          minWidth: 1.0,
+                          padding: EdgeInsets.zero,
+                          child: Text(
+                            '#flutter',
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .caption!
+                                .copyWith(
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(end: 6.0),
+                      child: Container(
+                        height: 25.0,
+                        child: MaterialButton(
+                          onPressed: () {},
+                          minWidth: 1.0,
+                          padding: EdgeInsets.zero,
+                          child: Text(
+                            '#android',
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .caption!
+                                .copyWith(
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(end: 6.0),
+                      child: Container(
+                        height: 25.0,
+                        child: MaterialButton(
+                          onPressed: () {},
+                          minWidth: 1.0,
+                          padding: EdgeInsets.zero,
+                          child: Text(
+                            '#software_developement',
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .caption!
+                                .copyWith(
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),*/
+*******************************************************************************
